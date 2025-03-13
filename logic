@@ -16,30 +16,34 @@ def Logic(a, b, c):
         x2 = (-b - math.sqrt(D)) / (2*a)
         return f"There are 2 roots: x1 = {x1:.2f}, x2 = {x2:.2f}"
 
-def check(prompt):
+def interactive_mode():
+    """Інтерактивний режим з повторним введенням при помилці."""
     while True:
-        value = input("\r" + prompt + " ") 
         try:
-            return float(value)
+            a = float(input("Enter a: "))
+            if a == 0:
+                print("Error: a cannot be 0. Please enter a nonzero value.")
+                continue  # Повторно запитуємо введення a
+            break
         except ValueError:
-            print(f"Error: '{value}' is not a valid number. Please enter a valid number.")
+            print("Error: Invalid input. Please enter a valid number.")
 
-def interactive():
-    try:
-        while True:
-            a = check("Enter a:")
-            if a != 0: 
-                break
-            print("Error: a cannot be 0. Please enter a nonzero value.")
-        
-        b = check("Enter b:")
-        c = check("Enter c:")
+    while True:
+        try:
+            b = float(input("Enter b: "))
+            break
+        except ValueError:
+            print("Error: Invalid input. Please enter a valid number.")
 
-        print(f"Equation is: ({a}) x² + ({b}) x + ({c}) = 0")
-        print(Logic(a, b, c))
-    
-    except KeyboardInterrupt:
-        print("\nProcess interrupted by user.")
+    while True:
+        try:
+            c = float(input("Enter c: "))
+            break
+        except ValueError:
+            print("Error: Invalid input. Please enter a valid number.")
+
+    print(f"Equation is: ({a}) x² + ({b}) x + ({c}) = 0")
+    print(solve_quadratic(a, b, c))
 
 def file(filename):
     try:
