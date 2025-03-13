@@ -1,1 +1,17 @@
+import math
 
+def Logic(a, b, c):
+    if a == 0:
+        return "Error: a cannot be 0"
+    
+    D = b**2 - 4*a*c 
+
+    if D < 0:
+        return "There are 0 roots"
+    elif D == 0:
+        x = -b / (2*a)
+        return f"There is 1 root: x1 = {x:.2f}"
+    else:
+        x1 = (-b + math.sqrt(D)) / (2*a)
+        x2 = (-b - math.sqrt(D)) / (2*a)
+        return f"There are 2 roots: x1 = {x1:.2f}, x2 = {x2:.2f}"
