@@ -51,3 +51,12 @@ def file(filename):
     except (ValueError, IndexError):
         print("Error: invalid file format")
         sys.exit(1)
+
+if __name__ == "__main__":
+    if len(sys.argv) == 1:
+        interactive()
+    elif len(sys.argv) == 2:
+        file(sys.argv[1])
+    else:
+        print("Incorrect input. Usage: python script.py [filename]")
+        sys.exit(1)
