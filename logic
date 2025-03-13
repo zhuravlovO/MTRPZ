@@ -32,3 +32,22 @@ def interactive():
     except ValueError:
         print("Error: Invalid input. Please enter valid numbers.")
         sys.exit(1)
+
+def file(filename):
+    try:
+        with open(filename, "r") as file:
+            data = file.readline().strip()
+            a, b, c = map(float, data.split()) 
+
+            if a == 0:  
+                raise ValueError("a cannot be 0") 
+
+            print(f"Equation is: ({a}) x² + ({b}) x + ({c}) = 0")
+            print(Logic(a, b, c))
+
+    except FileNotFoundError:
+        print(f"Error: file {filename} does not exist")
+        sys.exit(1)
+    except (ValueError, IndexError):
+        print("Error: invalid file format")
+        sys.exit(1)
