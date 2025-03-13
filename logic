@@ -16,22 +16,30 @@ def Logic(a, b, c):
         x2 = (-b - math.sqrt(D)) / (2*a)
         return f"There are 2 roots: x1 = {x1:.2f}, x2 = {x2:.2f}"
 
+def check(prompt):
+    while True:
+        value = input("\r" + prompt + " ") 
+        try:
+            return float(value)
+        except ValueError:
+            print(f"Error: '{value}' is not a valid number. Please enter a valid number.")
+
 def interactive():
     try:
-        a = float(input("Enter a: "))
-        if a == 0:
-            print("Error: a cannot be 0")
-            return
+        while True:
+            a = check("Enter a:")
+            if a != 0: 
+                break
+            print("Error: a cannot be 0. Please enter a nonzero value.")
         
-        b = float(input("Enter b: "))
-        c = float(input("Enter c: "))
+        b = check("Enter b:")
+        c = check("Enter c:")
 
         print(f"Equation is: ({a}) x² + ({b}) x + ({c}) = 0")
         print(Logic(a, b, c))
     
-    except ValueError:
-        print("Error: Invalid input. Please enter valid numbers.")
-        sys.exit(1)
+    except KeyboardInterrupt:
+        print("\nProcess interrupted by user.")
 
 def file(filename):
     try:
