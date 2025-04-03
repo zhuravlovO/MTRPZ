@@ -20,6 +20,17 @@ class DoublyLinkedList:
 
     # Довжина списку
     def length(self) -> int:
-        """Повертає поточну кількість елементів у списку."""
         return self._size
-
+    
+    def append(self, element: str) -> None:
+        if not isinstance(element, str):
+            raise TypeError("Can only append characters to this list")
+        new_node = Node(element)
+        if self.head is None:
+            self.head = new_node
+            self.tail = new_node
+        else:
+            self.tail.next = new_node
+            new_node.prev = self.tail
+            self.tail = new_node
+        self._size += 1
