@@ -203,3 +203,135 @@ def test_delete_from_empty_list():
     my_list = DoublyLinkedList()
     with pytest.raises(IndexError):
         my_list.delete(0)
+
+def test_get_first_element():
+    my_list = DoublyLinkedList()
+    my_list.append('a')
+    my_list.append('b')
+    assert my_list.get(0) == 'a'
+
+def test_get_last_element():
+    my_list = DoublyLinkedList()
+    my_list.append('a')
+    my_list.append('b')
+    my_list.append('c') 
+    assert my_list.get(2) == 'c'
+
+def test_get_middle_element():
+    my_list = DoublyLinkedList()
+    my_list.append('a')
+    my_list.append('b')
+    my_list.append('c')
+    assert my_list.get(1) == 'b'
+
+def test_get_from_list_with_one_element():
+    my_list = DoublyLinkedList()
+    my_list.append('z')
+    assert my_list.get(0) == 'z'
+
+def test_get_index_out_of_bounds_negative():
+    my_list = DoublyLinkedList()
+    my_list.append('a')
+    with pytest.raises(IndexError):
+        my_list.get(-1)
+
+def test_get_index_out_of_bounds_equal_length():
+    my_list = DoublyLinkedList()
+    my_list.append('a')
+    my_list.append('b') 
+    with pytest.raises(IndexError):
+        my_list.get(2) 
+
+def test_get_index_out_of_bounds_too_large():
+    my_list = DoublyLinkedList()
+    my_list.append('a')
+    with pytest.raises(IndexError):
+        my_list.get(5) 
+
+def test_get_from_empty_list():
+    my_list = DoublyLinkedList()
+    with pytest.raises(IndexError):
+        my_list.get(0)   
+             
+def test_delete_all_element_not_found():
+    my_list = DoublyLinkedList()
+    my_list.append('a')
+    my_list.append('b')
+    my_list.append('c')
+    initial_length = my_list.length()
+    my_list.deleteAll('x')
+    assert my_list.length() == initial_length
+    assert my_list.get(0) == 'a'
+    assert my_list.get(1) == 'b'
+    assert my_list.get(2) == 'c'
+
+def test_delete_all_single_occurrence_first():
+    my_list = DoublyLinkedList()
+    my_list.append('a')
+    my_list.append('b')
+    my_list.append('c')
+    my_list.deleteAll('a')
+    assert my_list.length() == 2
+    assert my_list.get(0) == 'b'
+    assert my_list.get(1) == 'c'
+    assert my_list.head.data == 'b'
+    assert my_list.head.prev is None
+
+def test_delete_all_single_occurrence_last():
+    my_list = DoublyLinkedList()
+    my_list.append('a')
+    my_list.append('b')
+    my_list.append('c')
+    my_list.deleteAll('c')
+    assert my_list.length() == 2
+    assert my_list.get(0) == 'a'
+    assert my_list.get(1) == 'b'
+    assert my_list.tail.data == 'b'
+    assert my_list.tail.next is None
+
+def test_delete_all_single_occurrence_middle():
+    my_list = DoublyLinkedList()
+    my_list.append('a')
+    my_list.append('b')
+    my_list.append('c')
+    my_list.deleteAll('b')
+    assert my_list.length() == 2
+    assert my_list.get(0) == 'a'
+    assert my_list.get(1) == 'c'
+    assert my_list.head.next is my_list.tail
+    assert my_list.tail.prev is my_list.head
+
+def test_delete_all_multiple_occurrences():
+    my_list = DoublyLinkedList()
+    my_list.append('a')
+    my_list.append('b')
+    my_list.append('a')
+    my_list.append('c')
+    my_list.append('a')
+    my_list.deleteAll('a')
+    assert my_list.length() == 2
+    assert my_list.get(0) == 'b'
+    assert my_list.get(1) == 'c'
+    assert my_list.head.data == 'b'
+    assert my_list.tail.data == 'c'
+    assert my_list.head.next is my_list.tail
+    assert my_list.tail.prev is my_list.head
+    assert my_list.head.prev is None
+    assert my_list.tail.next is None
+
+def test_delete_all_when_all_elements_match():
+    my_list = DoublyLinkedList()
+    my_list.append('x')
+    my_list.append('x')
+    my_list.append('x')
+    my_list.deleteAll('x')
+    assert my_list.length() == 0
+    assert my_list.head is None
+    assert my_list.tail is None
+
+def test_delete_all_from_empty_list():
+    my_list = DoublyLinkedList()
+    my_list.deleteAll('a')
+    assert my_list.length() == 0
+    assert my_list.head is None
+    assert my_list.tail is None        

@@ -98,3 +98,49 @@ class DoublyLinkedList:
         node_to_delete.next = None
         node_to_delete.prev = None
         return data_to_return
+    
+    def get(self, index: int) -> str:
+        if not (0 <= index < self.length()):
+            raise IndexError("Index out of bounds for get operation")
+
+        if index < self.length() // 2:
+            current_node = self.head
+            for _ in range(index):
+                current_node = current_node.next
+        else:
+            current_node = self.tail
+            for _ in range(self.length() - 1 - index):
+                current_node = current_node.prev
+
+        return current_node.data
+    
+    def deleteAll(self, element: str) -> None:
+        if not isinstance(element, str):
+             raise TypeError("Element to delete must be a character")
+
+        current_node = self.head
+        while current_node is not None:
+            next_node_to_check = current_node.next
+            if current_node.data == element:
+                prev_node = current_node.prev
+                next_node = current_node.next
+                if prev_node is None and next_node is None:
+                    self.head = None
+                    self.tail = None
+                elif prev_node is None:
+                    self.head = next_node
+                    if self.head: 
+                        self.head.prev = None
+                elif next_node is None:
+                    self.tail = prev_node
+                    if self.tail: 
+                        self.tail.next = None
+                else:
+                    prev_node.next = next_node
+                    next_node.prev = prev_node
+
+                current_node.next = None
+                current_node.prev = None
+                self._size -= 1
+
+            current_node = next_node_to_check
