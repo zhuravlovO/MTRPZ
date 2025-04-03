@@ -1,0 +1,28 @@
+name: Lab 2 CI (Python Tests)
+
+on:
+  push:
+    branches: [ main ] # Або master
+  pull_request:
+    branches: [ main ] # Або master
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+       python-version: '3.9' # Ваша версія Python
+
+    - name: Install dependencies
+      run: pip install pytest
+      working-directory: ./lab2
+    - name: Run tests with pytest
+      run: pytest
+      working-directory: ./lab2 
