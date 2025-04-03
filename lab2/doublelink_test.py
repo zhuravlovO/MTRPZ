@@ -54,3 +54,152 @@ def test_append_to_non_empty_list():
     assert second_node.next is third_node 
     assert third_node.prev is second_node 
     assert third_node.next is None       
+
+def test_insert_into_empty_list_at_zero():
+    my_list = DoublyLinkedList()
+    my_list.insert('a', 0)
+    assert my_list.length() == 1
+    assert my_list.head is not None
+    assert my_list.head is my_list.tail
+    assert my_list.head.data == 'a'
+    assert my_list.head.next is None
+    assert my_list.head.prev is None
+
+def test_insert_at_beginning():
+    my_list = DoublyLinkedList()
+    my_list.append('b')
+    my_list.append('c')
+    old_head = my_list.head
+    my_list.insert('a', 0)
+    assert my_list.length() == 3
+    assert my_list.head is not None
+    assert my_list.head.data == 'a'
+    assert my_list.head.next is old_head
+    assert old_head.prev is my_list.head
+    assert my_list.head.prev is None
+
+def test_insert_at_end():
+    my_list = DoublyLinkedList()
+    my_list.append('a')
+    my_list.append('b')
+    old_tail = my_list.tail
+    my_list.insert('c', 2)
+    assert my_list.length() == 3
+    assert my_list.tail is not None
+    assert my_list.tail.data == 'c'
+    assert my_list.tail.prev is old_tail
+    assert old_tail.next is my_list.tail
+    assert my_list.tail.next is None
+
+def test_insert_in_middle():
+    my_list = DoublyLinkedList()
+    my_list.append('a')
+    my_list.append('c')
+    node_a = my_list.head
+    node_c = my_list.tail
+    my_list.insert('b', 1)
+    assert my_list.length() == 3
+    node_b = node_a.next
+    assert node_b is not None
+    assert node_b.data == 'b'
+    assert node_a.next is node_b
+    assert node_b.prev is node_a
+    assert node_b.next is node_c
+    assert node_c.prev is node_b
+
+def test_insert_index_out_of_bounds_negative():
+    my_list = DoublyLinkedList()
+    my_list.append('a')
+    with pytest.raises(IndexError):
+        my_list.insert('x', -1)
+
+def test_insert_index_out_of_bounds_too_large():
+    my_list = DoublyLinkedList()
+    my_list.append('a')
+    my_list.append('b')
+    with pytest.raises(IndexError):
+        my_list.insert('x', 3)
+
+def test_insert_index_out_of_bounds_empty_list():
+    my_list = DoublyLinkedList()
+    with pytest.raises(IndexError):
+        my_list.insert('x', 1)
+    with pytest.raises(IndexError):
+        my_list.insert('x', -1)
+
+def test_delete_from_list_with_one_element():
+    my_list = DoublyLinkedList()
+    my_list.append('a')
+    deleted_value = my_list.delete(0)
+    assert deleted_value == 'a'
+    assert my_list.length() == 0
+    assert my_list.head is None
+    assert my_list.tail is None
+
+def test_delete_first_element():
+    my_list = DoublyLinkedList()
+    my_list.append('a')
+    my_list.append('b')
+    my_list.append('c')
+    node_b = my_list.head.next
+    deleted_value = my_list.delete(0)
+    assert deleted_value == 'a'
+    assert my_list.length() == 2
+    assert my_list.head is node_b
+    assert my_list.head.data == 'b'
+    assert my_list.head.prev is None
+    assert my_list.tail.data == 'c'
+
+def test_delete_last_element():
+    my_list = DoublyLinkedList()
+    my_list.append('a')
+    my_list.append('b')
+    my_list.append('c')
+    node_b = my_list.tail.prev
+    deleted_value = my_list.delete(2)
+    assert deleted_value == 'c'
+    assert my_list.length() == 2
+    assert my_list.tail is node_b
+    assert my_list.tail.data == 'b'
+    assert my_list.tail.next is None
+    assert my_list.head.data == 'a'
+
+def test_delete_middle_element():
+    my_list = DoublyLinkedList()
+    my_list.append('a')
+    my_list.append('b')
+    my_list.append('c')
+    node_a = my_list.head
+    node_c = my_list.tail
+    deleted_value = my_list.delete(1)
+    assert deleted_value == 'b'
+    assert my_list.length() == 2
+    assert my_list.head is node_a
+    assert my_list.tail is node_c
+    assert node_a.next is node_c
+    assert node_c.prev is node_a
+
+def test_delete_index_out_of_bounds_negative():
+    my_list = DoublyLinkedList()
+    my_list.append('a')
+    with pytest.raises(IndexError):
+        my_list.delete(-1)
+
+def test_delete_index_out_of_bounds_equal_length():
+    my_list = DoublyLinkedList()
+    my_list.append('a')
+    my_list.append('b')
+    with pytest.raises(IndexError):
+        my_list.delete(2)
+
+def test_delete_index_out_of_bounds_too_large():
+    my_list = DoublyLinkedList()
+    my_list.append('a')
+    my_list.append('b')
+    with pytest.raises(IndexError):
+        my_list.delete(3)
+
+def test_delete_from_empty_list():
+    my_list = DoublyLinkedList()
+    with pytest.raises(IndexError):
+        my_list.delete(0)
