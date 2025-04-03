@@ -144,3 +144,34 @@ class DoublyLinkedList:
                 self._size -= 1
 
             current_node = next_node_to_check
+    
+    def clear(self) -> None:
+        self.head = None
+        self.tail = None
+        self._size = 0    
+
+    def findFirst(self, element: str) -> int:
+        if not isinstance(element, str):
+             raise TypeError("Element to find must be a string (character)")
+
+        current_node = self.head
+        current_index = 0
+        while current_node is not None:
+            if current_node.data == element:
+                return current_index
+            current_node = current_node.next
+            current_index += 1
+        return -1
+
+    def findLast(self, element: str) -> int:
+        if not isinstance(element, str):
+             raise TypeError("Element to find must be a string (character)")
+
+        current_node = self.tail
+        current_index = self.length() - 1
+        while current_node is not None:
+            if current_node.data == element:
+                return current_index
+            current_node = current_node.prev
+            current_index -= 1
+        return -1

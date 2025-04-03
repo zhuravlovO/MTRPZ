@@ -252,7 +252,7 @@ def test_get_from_empty_list():
     my_list = DoublyLinkedList()
     with pytest.raises(IndexError):
         my_list.get(0)   
-             
+
 def test_delete_all_element_not_found():
     my_list = DoublyLinkedList()
     my_list.append('a')
@@ -334,4 +334,99 @@ def test_delete_all_from_empty_list():
     my_list.deleteAll('a')
     assert my_list.length() == 0
     assert my_list.head is None
-    assert my_list.tail is None        
+    assert my_list.tail is None     
+
+def test_clear_non_empty_list():
+    my_list = DoublyLinkedList()
+    my_list.append('a')
+    my_list.append('b')
+    my_list.append('c')
+    assert my_list.length() == 3
+    my_list.clear()
+    assert my_list.length() == 0
+    assert my_list.head is None
+    assert my_list.tail is None
+
+def test_clear_empty_list():
+    my_list = DoublyLinkedList()
+    assert my_list.length() == 0
+    my_list.clear()
+    assert my_list.length() == 0
+    assert my_list.head is None
+    assert my_list.tail is None   
+
+def test_find_first_not_found():
+    my_list = DoublyLinkedList()
+    my_list.append('a')
+    my_list.append('b')
+    assert my_list.findFirst('x') == -1
+
+def test_find_first_empty_list():
+    my_list = DoublyLinkedList()
+    assert my_list.findFirst('a') == -1
+
+def test_find_first_first_element():
+    my_list = DoublyLinkedList()
+    my_list.append('a')
+    my_list.append('b')
+    assert my_list.findFirst('a') == 0
+
+def test_find_first_last_element():
+    my_list = DoublyLinkedList()
+    my_list.append('a')
+    my_list.append('b')
+    my_list.append('c')
+    assert my_list.findFirst('c') == 2
+
+def test_find_first_middle_element():
+    my_list = DoublyLinkedList()
+    my_list.append('a')
+    my_list.append('b')
+    my_list.append('c')
+    assert my_list.findFirst('b') == 1
+
+def test_find_first_with_duplicates():
+    my_list = DoublyLinkedList()
+    my_list.append('a')
+    my_list.append('b')
+    my_list.append('a')
+    my_list.append('c')
+    assert my_list.findFirst('a') == 0 
+
+def test_find_last_not_found():
+    my_list = DoublyLinkedList()
+    my_list.append('a')
+    my_list.append('b')
+    assert my_list.findLast('x') == -1
+
+def test_find_last_empty_list():
+    my_list = DoublyLinkedList()
+    assert my_list.findLast('a') == -1
+
+def test_find_last_first_element():
+    my_list = DoublyLinkedList()
+    my_list.append('a')
+    my_list.append('b')
+    my_list.append('c')
+    assert my_list.findLast('a') == 0
+
+def test_find_last_last_element():
+    my_list = DoublyLinkedList()
+    my_list.append('a')
+    my_list.append('b')
+    assert my_list.findLast('b') == 1
+
+def test_find_last_middle_element():
+    my_list = DoublyLinkedList()
+    my_list.append('a')
+    my_list.append('b')
+    my_list.append('c')
+    assert my_list.findLast('b') == 1
+
+def test_find_last_with_duplicates():
+    my_list = DoublyLinkedList()
+    my_list.append('a')
+    my_list.append('b') 
+    my_list.append('a') 
+    my_list.append('c') 
+    assert my_list.findLast('a') == 2 
