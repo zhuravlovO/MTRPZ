@@ -175,3 +175,38 @@ class DoublyLinkedList:
             current_node = current_node.prev
             current_index -= 1
         return -1
+    
+    def clone(self) -> 'DoublyLinkedList':
+        new_list = DoublyLinkedList()
+        current_node = self.head
+        while current_node is not None:
+            new_list.append(current_node.data)
+            current_node = current_node.next
+        return new_list
+
+    def extend(self, elements: 'DoublyLinkedList') -> None:
+        if not isinstance(elements, DoublyLinkedList):
+            raise TypeError("Can only extend with another DoublyLinkedList")
+
+        current_node_in_other = elements.head
+        while current_node_in_other is not None:
+            self.append(current_node_in_other.data)
+            current_node_in_other = current_node_in_other.next
+
+    def reverse(self) -> None:
+        if self.length() < 2:
+            return
+
+        current_node = self.head
+        original_head = self.head
+        original_tail = self.tail
+
+        while current_node is not None:
+            next_original = current_node.next
+            temp_prev = current_node.prev
+            current_node.prev = current_node.next
+            current_node.next = temp_prev
+            current_node = next_original
+
+        self.head = original_tail
+        self.tail = original_head
