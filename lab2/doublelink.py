@@ -18,7 +18,22 @@ class DoublyLinkedList:
         self.tail: Node | None = None
         self._size: int = 0 
 
-    # Довжина списку
+    def __str__(self) -> str:
+        if self._size == 0:
+             return "[]"
+        elements = []
+        current = self.head
+        while current:
+            elements.append(repr(current.data))
+            current = current.next
+        return "[" + " <-> ".join(elements) + "]"
+
+    def __repr__(self) -> str:
+        if self._size == 0:
+            return "DoublyLinkedList()"
+        else:
+            return f"DoublyLinkedList(size={self._size}, head='{self.head.data}', tail='{self.tail.data}')"
+
     def length(self) -> int:
         return self._size
     
