@@ -48,7 +48,7 @@ class DoublyLinkedList:
             self.tail.next = new_node
             new_node.prev = self.tail
             self.tail = new_node
-        #self._size += 1
+        self._size += 1
 
     def insert(self, element: str, index: int) -> None:
         if not isinstance(element, str):
