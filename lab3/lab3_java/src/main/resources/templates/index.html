@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Cat Repeater</title>
+    <style>
+        body { font-family: sans-serif; margin: 20px; }
+        table { border-collapse: collapse; margin-top: 20px; width: 100%; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #f2f2f2; }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; }
+        input[type="text"], input[type="number"] { width: 300px; padding: 8px; box-sizing: border-box; }
+        button { padding: 10px 15px; background-color: #007bff; color: white; border: none; cursor: pointer; }
+        button:hover { background-color: #0056b3; }
+        pre { background-color: #f9f9f9; border: 1px solid #eee; padding: 10px; white-space: pre-wrap; word-wrap: break-word; }
+    </style>
+</head>
+<body>
+
+<h1>Welcome to Cat Repeater!</h1>
+
+<form th:action="@{/generate}" method="post">
+    <div class="form-group">
+        <label for="phrase">Phrase:</label>
+        <input type="text" id="phrase" name="phrase" th:value="${phraseInput ?: 'I love my cat'}" required />
+    </div>
+    <div class="form-group">
+        <label for="repetitions">Repetitions:</label>
+        <input type="number" id="repetitions" name="repetitions" value="3" min="1" required />
+    </div>
+    <div>
+        <button type="submit">Generate</button>
+    </div>
+</form>
+
+<!-- Тут ми будемо відображати результат -->
+<div th:if="${generatedText != null}" style="margin-top: 20px;">
+    <h2>Generated Text:</h2>
+    <pre th:text="${generatedText}"></pre>
+</div>
+
+<!-- Тут буде відображати історію -->
+<div style="margin-top: 30px;">
+    <div th:if="${history != null and not #lists.isEmpty(history)}">
+        <h2>Recent Requests:</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Timestamp</th>
+                    <th>Phrase</th>
+                    <th>Repetitions</th>
+                    <th>Generated Text (Preview)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="entry : ${history}">
+                    <td th:text="${#temporals.format(entry.timestamp, 'yyyy-MM-dd HH:mm:ss')}"></td>
+                    <td th:text="${entry.phrase}"></td>
+                    <td th:text="${entry.repetitions}"></td>
+                    <td th:text="${#strings.abbreviate(entry.generatedText, 70)}"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div th:if="${history == null or #lists.isEmpty(history)}">
+        <p>No request history yet.</p>
+    </div>
+</div>
+
+</body>
+</html>

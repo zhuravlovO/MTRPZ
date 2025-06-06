@@ -1,0 +1,9 @@
+version: '3.8' # Вказує версію синтаксису Docker Compose
+
+services: # Секція, де описуються всі сервіси (контейнери)
+  app: # Назва твого сервісу (може бути будь-яка, наприклад 'cat-repeater' або 'web')
+    image: cat-repeater-app-alpine:latest 
+    ports:
+      - "8080:8080" 
+    container_name: cat-repeater-via-compose 
+    restart: unless-stopped 
