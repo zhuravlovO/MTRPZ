@@ -1,0 +1,57 @@
+### Create a Survey with Questions and Answer Options
+POST http://localhost:8080/api/surveys
+Content-Type: application/json
+
+{
+  "title": "Фінальне опитування для бекенду",
+  "description": "Тест всіх зв'язків: Survey -> Question -> AnswerOption",
+  "questions": [
+    {
+      "text": "Яка ваша улюблена мова програмування?",
+      "type": "single_choice",
+      "options": [
+        { "text": "Java" },
+        { "text": "Python" },
+        { "text": "JavaScript" }
+      ]
+    },
+    {
+      "text": "Які фреймворки ви використовуєте?",
+      "type": "multiple_choice",
+      "options": [
+        { "text": "Spring" },
+        { "text": "React" },
+        { "text": "Django" }
+      ]
+    },
+    {
+      "text": "Залиште ваш відгук (текстове поле не має варіантів):",
+      "type": "text"
+      // Тут масиву "options" немає
+    }
+  ]
+}
+###
+
+GET http://localhost:8080/api/surveys/6275cfc2
+
+### Submit a response to the new survey
+POST http://localhost:8080/api/surveys/2d871de5/responses
+Content-Type: application/json
+
+{
+  "submittedAnswers": [
+    {
+      "question": { "id": 13 },
+      "answerText": "20" 
+    },
+    {
+      "question": { "id": 14 },
+      "answerText": "22,24"
+    },
+    {
+      "question": { "id": 15 },
+      "answerText": "Дуже деталізоване опитування, дякую!"
+    }
+  ]
+}
